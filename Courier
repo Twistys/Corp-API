@@ -1,0 +1,45 @@
+<?php
+$xml = simplexml_load_file("http:api.eveonline.com/corp/Contracts.xml.aspx?keyID=5267798&vCode=eYidsEaLmY1f4qOirb3jU5QFBrQsDeYHO187sTKdogDF4qDLyQjsQpcAMrYOHmC6");
+$results0 = $xml->xpath("//row[@type='Courier']);
+$i=0;
+$allContracts=array();
+foreach ( $result0 as $result )
+
+{
+  $i++;
+    foreach ( $result->attributes () as $key => $val )
+    {
+      $val=(string)$val;
+      $allContracts[$i][$key]=$val;
+    }
+}
+$outstandingcontracts=$i;
+$i=0;
+echo "<table>";
+echo "<tr>";
+echo "<th>type</th>";
+echo "<th>status</th>";
+echo "<th>dateIssued</th>";
+echo "<th>dateCompleted</th>;
+echo "<th>reward</th>";
+echo "<th>collateral</th>";
+echo "<th>volume</th>";
+echo "</tr>";
+
+for ($i = 1; $i <= $outstandingcontracts; $i++)
+{
+  if($allContracts[$i]["status"]=="Outstanding" and $allContracts[$i]["type"]=="Courier")
+  {
+    echo "<tr>\n";
+    echo "<td>".allContracts[$i]['type']."</td>";
+    echo "<td>".allContracts[$i]['status']."</td>";
+    echo "<td>".allContracts[$i]['dateIssued']."</td>";
+    echo "<td>".allContracts[$i]['dateCompleted']."</td>";
+    echo "<td>".allContracts[$i]['reward']."</td>";
+    echo "<td>".allContracts[$i]['collateral']."</td>";
+    echo "<td>".allContracts[$i]['volume']."</td>";
+    echo "</tr>\n";
+   }
+}
+echo"</table>";
+?>
